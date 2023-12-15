@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .dvd-logo {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: url('dvd.png') center/cover no-repeat;
+            animation: dvdLogoAnimation 3s infinite;
+        }
+        }
+    </style>
+    <title>さつまいもくん</title>
+</head>
+<body>
+    <div class="dvd-logo" id="dvdLogo"></div>
+
+    <script>
+        const dvdLogo = document.getElementById('dvdLogo');
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const logoWidth = 200; 
+        const logoHeight = 200;
+
+        function getRandomSpeed() {
+            return Math.random() * 2.85 + 1;
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function updateLogoPosition() {
+            const logoRect = dvdLogo.getBoundingClientRect();
+            const currentX = logoRect.left;
+            const currentY = logoRect.top;
+
+            const newX = currentX + logoSpeedX;
+            const newY = currentY + logoSpeedY;
+
+            if (newX < 0 || newX + logoWidth > screenWidth) {
+                logoSpeedX = -logoSpeedX;
+            }
+
+            if (newY < 0 || newY + logoHeight > screenHeight) {
+                logoSpeedY = -logoSpeedY;
+                document.body.style.backgroundColor = getRandomColor();
+            }
+
+            dvdLogo.style.transform = `translate(${newX}px, ${newY}px)`;
+        }
+
+        let logoSpeedX = getRandomSpeed();
+        let logoSpeedY = getRandomSpeed();
+
+        function animateLogo() {
+            updateLogoPosition();
+            requestAnimationFrame(animateLogo);
+        }
+
+        animateLogo();
+    </script>
+</body>
+</html>
