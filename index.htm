@@ -53,6 +53,7 @@
 
             if (newX < 0 || newX + logoWidth > screenWidth) {
                 logoSpeedX = -logoSpeedX;
+                document.body.style.backgroundColor = getRandomColor();
             }
 
             if (newY < 0 || newY + logoHeight > screenHeight) {
